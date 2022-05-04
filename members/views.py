@@ -4,7 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.contrib import messages
 from .models import Members
+from .forms import MembersForm
+from .filters import MemberFilter
 # Create your views here.
 
 def index(request):
@@ -24,11 +27,13 @@ def addrecord(request):
     y = request.POST['last']
     member = Members(firstname=x, lastname=y)
     member.save()
+    messages.success(request, "Record added successfully.")
     return HttpResponseRedirect(reverse('index'))
 
 def delete(request, id):
     member = Members.objects.get(id=id)
     member.delete()
+    messages.warning(request, "Record deleted successfully.")
     return HttpResponseRedirect(reverse('index'))
 
 def update(request, id):
@@ -46,5 +51,15 @@ def updaterecord(request, id):
     member.firstname = first
     member.lastname = last
     member.save()
+    messages.info(request, "Record updated successfully.")
     return HttpResponseRedirect(reverse('index'))
     
+def MembersView(request):
+    context = {}
+    form = MembersForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Record updated successfully by Model Form.')
+        return HttpResponseRedirect(reverse('index'))
+    context['form'] = form
+    return render(request, 'addform.html', context)

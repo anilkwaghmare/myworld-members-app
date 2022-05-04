@@ -1,16 +1,41 @@
-<h1>Members</h1>
-
-<table border="1">
-    {% for x in mymembers %}
-        <tr>
-            <td><a href="update/{{ x.id }}">{{ x.id }}</a></td>
-            <td>{{ x.firstname }}</td>
-            <td>{{ x.lastname }}</td>
-            <td><a href="delete/{{ x.id }}">delete</a></td>
-        </tr>
-    {% endfor %}
-</table>
-
-<p>
-    <a href="add/">Add member</a>
-</p>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container m-3 ">
+        {% comment %} search form {% endcomment %}
+        <form action="" method="GET" class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="float: right;">
+            <button class="btn btn-outline-success" type="submit" style="float: right;" name="search">Search</button>
+        </form>
+        {% include 'messages.html' %}
+        <table class="table table-striped table-hover table-bordered caption-top table-responsive">
+            <caption>
+                <strong>List of Members</strong>
+                <strong><a href="add/" class="btn btn-primary">Add Member</a></strong>
+            </caption>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            {% for x in mymembers %}
+                <tr>
+                    <td>
+                        <a href="update/{{ x.id }}">{{ x.id }}</a>
+                    </td>
+                    <td>{{ x.firstname }}</td>
+                    <td>{{ x.lastname }}</td>
+                    <td>
+                        <a href="update/{{ x.id }}">Update</a>
+                        <a href="delete/{{ x.id }}">delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p>
+            <a href="add/">Add member</a>
+        </p>
+    </div>
+{% endblock content %}

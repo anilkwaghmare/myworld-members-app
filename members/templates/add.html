@@ -1,13 +1,21 @@
-<h1>Add member</h1>
-
-<form action="addrecord/" method="POST">
-    {% comment %} to handle Cross Site Request Forgeries in forms where the method is POST. {% endcomment %}
-    {% csrf_token %}
-    First Name:<br>
-    <input type="text" name="first">
-    <br><br>
-    Last Name:<br>
-    <input type="text" name="last">
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Add member</h1>
+        <form action="addrecord/" method="POST">
+            {% comment %} to handle Cross Site Request Forgeries in forms where the method is POST. {% endcomment %}
+            {% csrf_token %}
+            First Name:
+            <br>
+            <input type="text" name="first">
+            <br>
+            <br>
+            Last Name:
+            <br>
+            <input type="text" name="last">
+            <br>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock content %}
